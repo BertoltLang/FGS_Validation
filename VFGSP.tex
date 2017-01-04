@@ -5,31 +5,15 @@
 \begin{document}
 \maketitle
 \begin{abstract}
-This is the abstract of this document
+\input{abstract.tex}
 \end{abstract}
 \tableofcontents
 \chapter{Introduction}
 \input{introduction.tex}
-\chapter{Framework}
-In this chapter the specifications and requirements of the Plato--Mission in general and its fine guidance system in detail are presented.
-	\section{The PLATO--Mission}
-	In this section the PLATO-Mission is described in 				detail.
-		\subsection{Goals}
-		The goal of the mission is to find exoplanets in the 				habitable zone around far away stars
-		\subsection{The payload}
-		Here, the used hardware is described.
-		\subsection{The means}
-		In this section the methods to find stars are 						presented. 
-	\section{The fine guidance System}
-	The requirements for the fine guidance system are 					described here.
+\chapter{The PLATO--Mission}
+\input{plato_mission.tex}
 \chapter{Validation tools}
-In this chapter, all tools used to validate the function of the fine guidance system are listed and explained in detail.  
-	\section{PLATOSim}
-	This section is about PLATOSim.
-		\subsection{Architecture and functions}
-		Here, the architecture and the functions of the 					Software is shown.
-		\subsection{In- and Output}
-		This subsection contains the description of the in- 			and output of PLATOSim
+\input{validation_tools.tex}
 \chapter{Summary}
-This is the summary of the work done to validate the FGS for PLATO.
+\input{summary.tex}
 \end{document}

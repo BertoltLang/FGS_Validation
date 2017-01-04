@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2017.1.4)  4 JAN 2017 14:37
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2017.1.4)  4 JAN 2017 15:27
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -47,15 +47,15 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 
 [1
 
-{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] [1] (./VFGSP.toc
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] (./abstract.tex)
+[1] (./VFGSP.toc
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <10.95> on input line 3.
 )
 \tf@toc=\write3
 \openout3 = `VFGSP.toc'.
 
-
-[1
+ [1
 
 ]
 Chapter 1.
@@ -63,23 +63,23 @@ Chapter 1.
 
 ] [3]
 Chapter 2.
-[4
+(./plato_mission.tex) [4
 
 ]
 Chapter 3.
-[5
+(./validation_tools.tex) [5
 
 ]
 Chapter 4.
-[6
+(./summary.tex) [6
 
 ] (./VFGSP.aux) ) 
 Here is how much of TeX's memory you used:
- 264 strings out of 493029
- 2863 string characters out of 6136235
+ 274 strings out of 493029
+ 3012 string characters out of 6136235
  57066 words of memory out of 5000000
- 3869 multiletter control sequences out of 15000+600000
- 10023 words of font info for 35 fonts, out of 8000000 for 9000
+ 3868 multiletter control sequences out of 15000+600000
+ 9716 words of font info for 34 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  23i,6n,19p,789b,179s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/
@@ -87,7 +87,7 @@ cmbx10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12
 .pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></
 usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/sha
 re/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb>
-Output written on VFGSP.pdf (8 pages, 78686 bytes).
+Output written on VFGSP.pdf (8 pages, 77770 bytes).
 PDF statistics:
  51 PDF objects out of 1000 (max. 8388607)
  35 compressed objects within 1 object stream
