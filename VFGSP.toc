@@ -1,8 +1,12 @@
 \contentsline {chapter}{\numberline {1}Introduction}{2}
 \contentsline {chapter}{\numberline {2}The PLATO--Mission}{4}
 \contentsline {section}{\numberline {2.1}Goals}{4}
-\contentsline {section}{\numberline {2.2}The payload}{4}
-\contentsline {section}{\numberline {2.3}The means}{4}
-\contentsline {section}{\numberline {2.4}The fine guidance System}{5}
-\contentsline {chapter}{\numberline {3}Validation tools}{6}
-\contentsline {chapter}{\numberline {4}Summary}{7}
+\contentsline {section}{\numberline {2.2}The payload}{5}
+\contentsline {section}{\numberline {2.3}The means}{5}
+\contentsline {section}{\numberline {2.4}The fine guidance System}{6}
+\contentsline {chapter}{\numberline {3}Validation tools}{7}
+\contentsline {section}{\numberline {3.1}PLATOSim}{7}
+\contentsline {subsection}{\numberline {3.1.1}Input and Output}{7}
+\contentsline {subsection}{\numberline {3.1.2}Simulation Process}{7}
+\contentsline {subsubsection}{Geometry}{8}
+\contentsline {chapter}{\numberline {4}Summary}{10}
