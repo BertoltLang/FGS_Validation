@@ -1,14 +1,37 @@
 \section{PLATOSim}
 PLATOSim is a Simulator developed by the University Leuven which generates data as the PLATO mission will do, by simulating the whole acquisition process. The process aims to synthesize the satellite images as realisticly as possible by including all known noise sources and generating a numerically modelled imagette for each considered star. 
 \newline
-PLATOSim is planned to be a tool for the scientific comunity which is easily adaptable for other high-precision photometric space missions as well, therefore it is build very versatile and easy tweakable in its parameters.
+PLATOSim is planned to be a tool for the scientific comunity which is easily adaptable for other high-precision photometric space missions as well, therefore it is build very versatile and easy tweakable in its parameters. At the time beeing its main usage is by the different workgroups which develop software applications for the PLATO mission. PLATOSim is operational but stil in the process of testing and is adapted according to the needs of the different users from the aformentioned workgroups.
 \newline
 In this section the architecture and the mode of operation of the tool and all considered influence parameters are described.
-\subsection{Input and Output}
+\subsection{In- and Output}
+In this section the in- and output of PLATOSim is discussed. 
+\subsubsection{Output}
+The goal of PLATOSim is the generation of the imagettes which are used to create the light curves of a star. Those imagettes are squared grayscale pictures centered around a star with an edge length of only 9 pixels. For every exposure there is a seperate imagette. All imagettes for a single star are stored in a hdf5 file. To retrace the steps which let to the creation of the different help matrices as well as the subpixel map of the imagette and the corresponding psf are included to. Furthermore all information about the star like its position in space and on the CCD, its ID number and its magnitude are stored in the hdf5 file.
+\subsubsection{Input}
+To create the desired data some information have to be given by the user of the simulator. The basis of the input is the star catalog which lists all stars, a simulation should be run for. This is a simple text--file which contains the right-ascension, the declination and the magnitude of every star in one line seperated by white spaces. Furthermore, there is an input--file where the user can configure the parameters of the simulation. There are possibilities to in- or exclude certain effects or noise sources and to alter numerical data like the orientation of the used telescope or of the CCD with respect to the pointing direction of the spacecraft. Some sources of disturbance need more direct input than random generated numbers, therefore files of the jitter movement and the thermo--elastic drift are present as well. The jitter--file includes the yaw, pitch and roll angles over which the axises of the spacecraft is rotated for a given time. Those data are stored as numbers, seperated by white spaces, in a text--file in which every line represents a measuring step.    
+\subsection{Architecture}
+PLATOSim3 aims to simulate the work of the PLATO satellite as close to reality as possible. Therefore the architecture of the program consists of 5 major parts to depict the spacecraft in its orbit and all the processes necessary for the data generation and one governing part, which controlls the information flow between them. Those parts are namely the platform, the telescope, the camera, the detector, the sky and the simulation. The main objective of each of those program parts is as follows:
 
+\begin{itemize}
+	\item platform -- stores information about the satellites movement e.g. jitter
+	\item camera -- application of the point spread function
+	\item detector -- administration of the different (sub-)pixel maps
+	\item telescope -- provides information about the thermo-elastic drift
+	\item sky -- includes data about the stars
+	\item simulation -- organisation and flow control 
+\end{itemize} 
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=\textwidth]{PLATOSim_design.jpg}
+	\caption{PLATOSim process}
+	\label{fig:mesh3}
+\end{figure}
+
+In this section the workflow of PLATOSIM will be presented along these program parts. First the managing simulation process is shown after which the details of the different simulation parts will be revealed.   
 \subsection{Simulation Process}  
 The working process of PLATOSim is shown in figure \ref{fig:mesh1}. In this section The single steps are shown and analysed for their relevance for the fine guidance system.
-\newline
 
 \begin{figure}[h]
 \centering
@@ -22,4 +45,6 @@ PLATOSim aims to generate only one imagette for one star with one exposure of th
 To correctly simulate motions and noise effects even the relatively small size (18 mycrometer) of the pixels is too large. Therefore it is necessary to subdivide each physical pixel in a number of subpixels to display intra-pixel sensitivities. The aforementioned imagette is enlarged in its dimensions depending on the number of subpixels the user wishes. All effects like the PSF or noise sources are applied on this subpixelmap, before it's rebinned again to the small imagette in the end. The more subpixels are used, the more accurate the result will be in theory.  However a larger subpixel map comes always at the price of longer processing times and more needed memory. 
 
 \subsubsection{Geometry}
-The first step is to determine where a star falls on which CCD of a camera. Therefore a few input data are required. The most important ones are the information about the currently relevant star and the orientation of the pointing axis of the satellite. 
+The first step is to determine where a star falls on which CCD of a camera. Therefore a few input data are required. The most important ones are the information about the currently relevant star and the orientation of the pointing axis of the satellite.
+
+\subsection{Using PLATOSim for the FGS testing} 
