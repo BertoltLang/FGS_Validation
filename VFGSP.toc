@@ -12,5 +12,5 @@
 \contentsline {subsection}{\numberline {3.1.2}Architecture}{8}
 \contentsline {subsection}{\numberline {3.1.3}Simulation Process}{9}
 \contentsline {subsubsection}{Geometry}{10}
-\contentsline {subsection}{\numberline {3.1.4}Using PLATOSim for the FGS testing}{11}
-\contentsline {chapter}{\numberline {4}Summary}{12}
+\contentsline {subsection}{\numberline {3.1.4}Using PLATOSim for the FGS testing}{10}
+\contentsline {chapter}{\numberline {4}Summary}{13}

@@ -7,7 +7,23 @@ In this section the architecture and the mode of operation of the tool and all c
 \subsection{In- and Output}
 In this section the in- and output of PLATOSim is discussed. 
 \subsubsection{Output}
-The goal of PLATOSim is the generation of the imagettes which are used to create the light curves of a star. Those imagettes are squared grayscale pictures centered around a star with an edge length of only 9 pixels. For every exposure there is a seperate imagette. All imagettes for a single star are stored in a hdf5 file. To retrace the steps which let to the creation of the different help matrices as well as the subpixel map of the imagette and the corresponding psf are included to. Furthermore all information about the star like its position in space and on the CCD, its ID number and its magnitude are stored in the hdf5 file.
+The goal of PLATOSim is the generation of the imagettes which are used to create the light curves of a star. Those imagettes are squared grayscale pictures centered around a star with a variable edge length. For the fast-cameras, which are used for the FGS position estimation imagettes with an edge length of 9 pixels are used. For every exposure there is a seperate imagette. All imagettes for a single star are stored in a hdf5 file. In figure \ref{fig:imagettes} three imagettes from three different stars are depicted. 
+
+\begin{figure}[!htb]
+\minipage{0.32\textwidth}
+  \includegraphics[width=\linewidth]{Imagette1.JPG}
+\endminipage\hfill
+\minipage{0.32\textwidth}
+  \includegraphics[width=\linewidth]{Imagette2.JPG}
+\endminipage\hfill
+\minipage{0.32\textwidth}%
+  \includegraphics[width=\linewidth]{Imagette3.JPG}
+\endminipage
+\centering
+\caption{Output Imagettes from PLATOSim3}\label{fig:imagettes}
+\end{figure}
+
+To retrace the steps which let to the creation of the different help matrices as well as the subpixel map of the imagette and the corresponding psf are included too. Furthermore all information about the star, like its position in space and on the CCD, its ID number and its magnitude are stored in the hdf5 file.
 \subsubsection{Input}
 To create the desired data some information have to be given by the user of the simulator. The basis of the input is the star catalog which lists all stars, a simulation should be run for. This is a simple text--file which contains the right-ascension, the declination and the magnitude of every star in one line seperated by white spaces. Furthermore, there is an input--file where the user can configure the parameters of the simulation. There are possibilities to in- or exclude certain effects or noise sources and to alter numerical data like the orientation of the used telescope or of the CCD with respect to the pointing direction of the spacecraft. Some sources of disturbance need more direct input than random generated numbers, therefore files of the jitter movement and the thermo--elastic drift are present as well. The jitter--file includes the yaw, pitch and roll angles over which the axises of the spacecraft is rotated for a given time. Those data are stored as numbers, seperated by white spaces, in a text--file in which every line represents a measuring step.    
 \subsection{Architecture}
@@ -45,6 +61,54 @@ PLATOSim aims to generate only one imagette for one star with one exposure of th
 To correctly simulate motions and noise effects even the relatively small size (18 mycrometer) of the pixels is too large. Therefore it is necessary to subdivide each physical pixel in a number of subpixels to display intra-pixel sensitivities. The aforementioned imagette is enlarged in its dimensions depending on the number of subpixels the user wishes. All effects like the PSF or noise sources are applied on this subpixelmap, before it's rebinned again to the small imagette in the end. The more subpixels are used, the more accurate the result will be in theory.  However a larger subpixel map comes always at the price of longer processing times and more needed memory. 
 
 \subsubsection{Geometry}
-The first step is to determine where a star falls on which CCD of a camera. Therefore a few input data are required. The most important ones are the information about the currently relevant star and the orientation of the pointing axis of the satellite.
+The first step is to determine where a star falls on which CCD of a camera. Therefore a few input data are required. The most important ones are the information about the currently 			relevant star and the orientation of the pointing axis of the satellite.
 
-\subsection{Using PLATOSim for the FGS testing} 
+\subsection{Using PLATOSim for the FGS testing}
+Whether PLATOSim3 is suitable for the testing of the FPS is dependant on mainly two things -- its speed and its precision in generating the output imagettes. The FGS of the PLATO mission has to be able to determine the position and orientation of the spacecraft from the output of the sensors in real time. Therefore the output of any simulator has to produce imagettes at least as fast as the fast cameras of PLATO would deliver them. The precision of PLATOSim3 is highly dependable on the correct mathematical representation of the effects the starlight causes on the CCD sensors. In the next subsections both aspects will be discussed.
+\newline
+To test the capabilities of PLATOSim3 a series of four simulations was conducted. The simulations were created using the following input parameters:
+\begin{itemize}
+	\item usage of the same catalog with 134 stars
+	\item 1000 exposures of the detector
+	\item gaussian PSF with 0.5 standard deviation
+	\item no other noise source than jitter
+	\item gradual increase of the number of subpixels used (128, 256, 512, 1024)
+\end{itemize}
+The goal of those simulations were the deduction of the influence of the number of subpixels on the quality of the position estimation with the FGS, as well as the measuring of the time needed to create a single output imagette. 
+\newline
+PLATOSim3 is a tool designed for a serial creation of imagettes for one star after another. However, to reduce the duration of a simulation (one simulation means in this context the generation of 1000 imagettes for all stars in the catalog) a computer cluster with 24 cores is used, which can conduct the simulation of 24 stars parallel, reducing the time of each simulation series to 5\% of its initial value. This greatly improves the possibilities to generate output but looses its usefullnes with higher numbers of subpixels. The problem is the convolution of the used psf with the created subpixel matrix for an imagette. Both matrices have the size of ~12000x12000 pixels (... GB) which are written in the RAM. The used cluster (RAM: 96GB) is not able to store 24 of those matrix pairs without running out of memory, therefore the number of parallel processes is reduced to ... and the computation duration for the whole series increases in comparison to the earlier simulations. The results of the tests are shown in table \ref{table:1}. 
+\newline
+This simple test shows, that under the current circumstances PLATOSim3 is only with the restriction to 256 subpixels able to generate imagettes in real time. The exposure time of the fast cameras on the satellite will be 2.3 s which is exceeded by the 512 subpixel simulation. Furthermore one has to keep in mind, that only 24 imagettes or less can be generated simulataniously. 
+
+\begin{table}
+	\begin{center}
+		\begin{tabular}{ | c | c | c | }
+			\hline
+			Subpixels & Overall duration & Imagette generation time \\ \hline
+			128 & 00:20:15:32 & 00:00:00:20 \\ \hline
+			256 & 01:18:00:02 & 00:00:00:78 \\ \hline
+			512 & 05:42:40:17 & 00:00:03:42 \\ \hline
+		\end{tabular}
+		\caption{Simulation duration}
+		\label{table:1}
+	\end{center}
+\end{table}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
